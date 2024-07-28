@@ -1,8 +1,11 @@
+import { Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+
 function App() {
   return (
-    <>
-      <h1>SPARCS 24</h1>
-    </>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+    </Routes>
   );
 }
 
