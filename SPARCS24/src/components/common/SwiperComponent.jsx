@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 
 const StyledSwiper = styled(Swiper)`
   width: 100%;
-  height: 20rem;
+  height: ${(props) => props.height || "20rem"};
   margin-bottom: 4rem;
 
   .swiper-slide {
@@ -31,7 +31,7 @@ const StyledSwiper = styled(Swiper)`
 
     &::after {
       font-size: 0.8rem;
-      font-weight: 900; /* 화살표를 더 두껍게 만듭니다 */
+      font-weight: 900;
     }
   }
 
@@ -55,21 +55,21 @@ const StyledSwiper = styled(Swiper)`
   }
 `;
 
-// Swiper 컴포넌트를 정의합니다.
-const SwiperComponent = ({ images, loop = true }) => {
+const SwiperComponent = ({ images, loop = true, height = "20rem" }) => {
   return (
     <StyledSwiper
       modules={[Navigation, Pagination, Autoplay]}
-      spaceBetween={50}
+      spaceBetween={0}
       slidesPerView={1}
       navigation
       pagination={{ clickable: true }}
-      autoplay={{ delay: 5000 }}
+      autoplay={{ delay: 3000, disableOnInteraction: false }}
       loop={loop}
+      height={height}
     >
       {images.map((image, index) => (
         <SwiperSlide key={index}>
-          <img src={image.src} alt={image.alt} />
+          <img src={image.src} alt={image.alt || `Slide ${index + 1}`} />
         </SwiperSlide>
       ))}
     </StyledSwiper>
