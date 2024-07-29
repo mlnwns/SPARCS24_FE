@@ -64,9 +64,6 @@ const NavBar = () => {
       <DownNavBarContainer>
         <NavList>
           <NavItem>
-            <NavLink href="#">전체 카테고리</NavLink>
-          </NavItem>
-          <NavItem>
             <NavLink href="#">교육 강의</NavLink>
           </NavItem>
           <NavItem>
