@@ -22,7 +22,7 @@ const RegisterPage = () => {
   };
 
   const validatePassword = (password) => {
-    return password.length >= 8; // 최소 8자 이상
+    return password.length >= 8 && password.length <= 20; // 8자 이상 20자 이하
   };
 
   const handleSubmit = (e) => {
@@ -32,7 +32,7 @@ const RegisterPage = () => {
       newErrors.username = "아이디는 영문자와 숫자만 입력 가능합니다.";
     }
     if (!validatePassword(password)) {
-      newErrors.password = "비밀번호는 최소 8자 이상이어야 합니다.";
+      newErrors.password = "비밀번호는 8자 이상 20자 이하여야 합니다.";
     }
     setErrors(newErrors);
 
@@ -68,6 +68,7 @@ const RegisterPage = () => {
               showToggle={true}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              maxLength={20} // 최대 20자로 제한
             />
             {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>}
           </div>
