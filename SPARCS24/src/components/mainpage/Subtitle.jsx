@@ -5,10 +5,12 @@ const SubtitleContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 1.5rem;
 `;
 
 const Subtitle = styled.h2`
   font-size: 1.3em;
+  font-weight: 700;
   margin: 0;
 `;
 
