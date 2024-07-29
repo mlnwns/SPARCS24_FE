@@ -1,5 +1,5 @@
 import NavBar from "../components/common/NavBar";
-import Container from "../components/common/Container";
+import SeniorContainer from "../components/common/SeniorContainer";
 import SwiperComponent from "../components/common/SwiperComponent";
 import Subtitle from "../components/mainpage/Subtitle";
 import Profiles from "../components/mainpage/Profiles";
@@ -48,22 +48,23 @@ const guideImages = [
   { src: "/img2.png", alt: "Guide 3" },
 ];
 
-const MainPage = () => {
+const SeniorMainPage = () => {
   return (
     <>
       <NavBar />
-      <Container main>
-        <SwiperComponent images={images} />
+      <SeniorContainer main>
+        <SwiperComponent images={images} height="400px" />
+
         <Subtitle>우리 동네 하모니는 누가 있을까요?</Subtitle>
         <Profiles profiles={profiles} />
         <Subtitle>하모니가 처음이신가요?</Subtitle>
         <NewUserGuide images={guideImages} />
         <Subtitle>맞벌이 부부를 위한 육아 꿀팁</Subtitle>
         <Tips tips={tips} />
-      </Container>
+      </SeniorContainer>
       <Footer />
     </>
   );
 };
 
-export default MainPage;
+export default SeniorMainPage;
