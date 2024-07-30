@@ -52,7 +52,7 @@ const MainPage = () => {
   return (
     <>
       <NavBar />
-      <Container main>
+      <Container>
         <SwiperComponent images={images} />
         <Subtitle>우리 동네 하모니는 누가 있을까요?</Subtitle>
         <Profiles profiles={profiles} />
