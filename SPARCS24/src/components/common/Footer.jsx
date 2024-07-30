@@ -3,7 +3,7 @@ import styled from "styled-components";
 const FooterWrapper = styled.footer`
   background-color: #f5f5f5;
   padding: 2rem 0;
-  margin-top: 2rem;
+  margin-top: 1rem;
 `;
 
 const FooterContent = styled.div`
