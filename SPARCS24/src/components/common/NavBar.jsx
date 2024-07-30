@@ -5,7 +5,8 @@ const UpNavBarContainer = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 3rem 5rem 0 5rem;
+  padding: ${(props) =>
+    props.senior ? "3rem 3rem 0 3rem" : "3rem 5rem 0 5rem"};
   font-size: 0.9rem;
 `;
 
@@ -13,7 +14,7 @@ const DownNavBarContainer = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 5rem;
+  padding: ${(props) => (props.senior ? "1rem 3rem" : "1rem 5rem")};
 `;
 
 const NavList = styled.ul`
@@ -44,52 +45,6 @@ const NavLink = styled.a`
     color: #2f2f2f;
   }
 `;
-
-const NavBar = () => {
-  return (
-    <>
-      <UpNavBarContainer>
-        <LogoWrapper>
-          <img src="/logo.png" alt="SPARCS 24th" />
-        </LogoWrapper>
-        <NavList>
-          <NavItem>
-            <NavLink href="#">로그인/회원가입</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">고객센터</NavLink>
-          </NavItem>
-        </NavList>
-      </UpNavBarContainer>
-      <DownNavBarContainer>
-        <NavList>
-          <NavItem>
-            <NavLink href="#">교육 강의</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">자기소개 작성</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">문서 작성</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#">하모니 찾기</NavLink>
-          </NavItem>
-        </NavList>
-        <NavList>
-          <Search>
-            <Input placeholder="하모니를 찾아보세요" type="text" />
-            <IconSpace>
-              <IoIosSearch />
-            </IconSpace>
-          </Search>
-        </NavList>
-      </DownNavBarContainer>
-    </>
-  );
-};
-
-export default NavBar;
 
 const LogoWrapper = styled.div`
   img {
@@ -124,3 +79,66 @@ const IconSpace = styled.div`
   top: 9px;
   cursor: pointer;
 `;
+
+const NavBar = ({ senior }) => {
+  return (
+    <>
+      <UpNavBarContainer senior={senior}>
+        <LogoWrapper>
+          <img src="/logo.png" alt="SPARCS 24th" />
+        </LogoWrapper>
+        <NavList>
+          <NavItem>
+            <NavLink href="/login">로그인/회원가입</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="#">고객센터</NavLink>
+          </NavItem>
+        </NavList>
+      </UpNavBarContainer>
+      <DownNavBarContainer senior={senior}>
+        {senior ? (
+          <NavList>
+            <NavItem>
+              <NavLink href="#">필수 교육</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#">자기소개 작성</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#">하모니 사례</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#">문서 작성</NavLink>
+            </NavItem>
+          </NavList>
+        ) : (
+          <NavList>
+            <NavItem>
+              <NavLink href="#">자녀 정보 등록</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#">하모니 찾기</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#">하모니 사례</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="#">육아 꿀팁</NavLink>
+            </NavItem>
+          </NavList>
+        )}
+        <NavList>
+          <Search>
+            <Input placeholder="하모니를 찾아보세요" type="text" />
+            <IconSpace>
+              <IoIosSearch />
+            </IconSpace>
+          </Search>
+        </NavList>
+      </DownNavBarContainer>
+    </>
+  );
+};
+
+export default NavBar;
