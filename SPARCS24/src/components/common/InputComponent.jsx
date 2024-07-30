@@ -11,7 +11,7 @@ const widthSizes = {
 
 const InputWrapper = styled.div`
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   width: ${(props) => widthSizes[props.size] || widthSizes.m};
 `;
 
