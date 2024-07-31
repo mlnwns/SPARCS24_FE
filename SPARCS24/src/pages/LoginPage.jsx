@@ -7,16 +7,78 @@ import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [isChecked, setIsChecked] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
 
   const handleSignUp = () => {
     navigate("/register");
   };
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const formData = new FormData();
+      formData.append("username", username);
+      formData.append("password", password);
+
+      const response = await fetch(`${serverUrl}/login`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.status === 200) {
+        const accessToken = response.headers.get("Authorization");
+
+        if (accessToken) {
+          localStorage.setItem("accessToken", accessToken);
+          console.log("Access token saved to localStorage");
+
+          // 역할 확인을 위한 추가 요청
+          const storedAccessToken = localStorage.getItem("accessToken");
+          const roleResponse = await fetch(`${serverUrl}/main/role`, {
+            method: "GET",
+            headers: {
+              access: storedAccessToken,
+            },
+          });
+
+          if (roleResponse.ok) {
+            const roleData = await roleResponse.json();
+
+            // roleData를 로컬 스토리지에 저장
+            localStorage.setItem("userRole", JSON.stringify(roleData));
+            console.log("User role saved to localStorage");
+
+            if (roleData === false || roleData === "false") {
+              navigate("/senior");
+            } else if (roleData === true || roleData === "true") {
+              navigate("/");
+            } else {
+              navigate("/"); // 기본 페이지로 이동
+            }
+          } else {
+            console.warn("Failed to fetch user role");
+            navigate("/");
+          }
+        } else {
+          console.warn("Access token not found in response headers");
+          navigate("/"); // 토큰이 없을 경우 기본 페이지로 이동
+        }
+      } else {
+        throw new Error("Login failed");
+      }
+    } catch (error) {
+      console.error("로그인 실패:", error);
+      alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
+    }
+  };
   return (
     <div>
       <Container>
-        <form>
+        <form onSubmit={handleLogin}>
           <FormWrapper>
             <Logo src="logo.png" alt="Logo" />
             <InputComponent
@@ -25,6 +87,8 @@ const LoginPage = () => {
               size="m"
               type="text"
               placeholder="아이디를 입력하세요"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <InputComponent
               label="비밀번호"
@@ -33,6 +97,8 @@ const LoginPage = () => {
               size="m"
               placeholder="비밀번호를 입력하세요"
               showToggle={true}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <CheckboxWrapper onClick={() => setIsChecked(!isChecked)}>
               {isChecked ? (
