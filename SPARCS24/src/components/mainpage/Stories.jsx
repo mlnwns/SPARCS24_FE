@@ -24,7 +24,7 @@ const StoryOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(101, 101, 101, 0.6);
+  background-color: rgba(101, 101, 101, 0.3);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -51,8 +51,16 @@ const StoryLink = styled.p`
 
 const Stories = () => {
   const stories = [
-    { image: "/img1.png", title: "성북동 길양희", subtitle: "하모니의 이야기" },
-    { image: "/img2.png", title: "강남구 김미영", subtitle: "하모니의 이야기" },
+    {
+      image: "/story1.png",
+      title: "성북동 길양희",
+      subtitle: "하모니의 이야기",
+    },
+    {
+      image: "/story2.png",
+      title: "강남구 김미영",
+      subtitle: "하모니의 이야기",
+    },
   ];
 
   return (
