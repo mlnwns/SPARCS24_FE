@@ -9,7 +9,7 @@ export default SeniorContainer;
 const StyledContainer = styled.div`
   width: 100%;
   margin: 0 auto; /* 중앙 정렬 */
-  padding: 2rem 3rem 2rem 3rem;
+  padding: 2rem 3rem 0rem 3rem;
   box-sizing: border-box; /* 패딩을 너비에 포함 */
 
   @media (max-width: 768px) {
