@@ -50,7 +50,11 @@ const MainPage = () => {
         <Subtitle>맞벌이 부부를 위한 육아 꿀팁</Subtitle>
         <Tips tips={tips} />
       </Container>
-      <Footer />
+      <img
+        src="/Footer.png"
+        alt="Footer"
+        style={{ marginTop: "8rem", width: "100%" }}
+      />
     </>
   );
 };
