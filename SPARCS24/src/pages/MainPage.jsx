@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import NavBar from "../components/common/NavBar";
 import Container from "../components/common/Container";
 import SwiperComponent from "../components/common/SwiperComponent";
@@ -5,7 +7,8 @@ import Subtitle from "../components/mainpage/Subtitle";
 import Profiles from "../components/mainpage/Profiles";
 import Tips from "../components/mainpage/Tips";
 import NewUserGuide from "../components/mainpage/NewUserGuide";
-import Footer from "../components/common/Footer";
+
+const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 const images = [
   { src: "/Banner1.png", alt: "Banner 1" },
@@ -38,13 +41,43 @@ const tips = [
 ];
 
 const MainPage = () => {
+  const [profilesData, setProfilesData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userRole = localStorage.getItem("userRole");
+
+      if (userRole === "true") {
+        try {
+          const accessToken = localStorage.getItem("accessToken");
+          const response = await axios.get(
+            `${serverUrl}/main/listOfALlHarmony`,
+            {
+              headers: {
+                access: accessToken,
+              },
+            }
+          );
+
+          // 첫 4개의 데이터만 사용
+          const limitedData = response.data.slice(0, 4);
+          setProfilesData(limitedData);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <NavBar />
       <Container>
         <SwiperComponent images={images} />
         <Subtitle>우리 동네 하모니는 누가 있을까요?</Subtitle>
-        <Profiles />
+        <Profiles data={profilesData} />
         <Subtitle>하모니가 처음이신가요?</Subtitle>
         <NewUserGuide />
         <Subtitle>맞벌이 부부를 위한 육아 꿀팁</Subtitle>

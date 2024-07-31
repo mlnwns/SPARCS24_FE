@@ -22,7 +22,7 @@ function App() {
       <Route path="/register/parent" element={<ParentRegisterPage />} />
       <Route path="/register/senior" element={<SeniorRegisterPage />} />
       <Route path="/senior/resume" element={<ResumePage />} />
-      <Route path="/detail" element={<DetailPage />} />
+      <Route path="/detail/:id" element={<DetailPage />} />
       <Route path="/parent/cover-letter" element={<CoverLetterPage />} />
       <Route path="/list" element={<ListPage />} />
     </Routes>

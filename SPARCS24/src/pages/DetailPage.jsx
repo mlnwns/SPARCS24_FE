@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import NavBar from "../components/common/NavBar";
 import SeniorContainer from "../components/common/SeniorContainer";
 import styled from "styled-components";
@@ -10,7 +11,8 @@ const serverUrl = import.meta.env.VITE_SERVER_URL;
 const DetailPage = () => {
   const [harmonyData, setHarmonyData] = useState(null);
   const [showFullIntroduction, setShowFullIntroduction] = useState(false);
-  const accountId = 0; // 우선 0으로 설정
+  const { id } = useParams(); // URL에서 id 파라미터를 가져옵니다.
+  const accountId = id; // URL에서 가져온 id를 accountId로 사용합니다.
 
   useEffect(() => {
     const fetchHarmonyData = async () => {

@@ -100,6 +100,7 @@ const NavBar = ({ senior, hideDownNav, useDetailLogo }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("userRole");
     setIsLoggedIn(false);
     navigate("/");
   };
@@ -161,7 +162,7 @@ const NavBar = ({ senior, hideDownNav, useDetailLogo }) => {
                 <NavLink href="/parent/cover-letter">자녀 정보 등록</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="#">하모니 찾기</NavLink>
+                <NavLink href="/list">하모니 찾기</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="#">하모니 사례</NavLink>

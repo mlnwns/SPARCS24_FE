@@ -104,7 +104,7 @@ const ResumePage = () => {
       );
       console.log("Resume saved successfully:", response.data);
       alert("이력서가 성공적으로 저장되었습니다.");
-      navigate("/detail");
+      navigate("/detail/0");
     } catch (error) {
       console.error("Error saving resume:", error);
       alert("이력서 저장 중 오류가 발생했습니다.");

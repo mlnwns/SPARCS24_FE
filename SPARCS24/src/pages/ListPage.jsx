@@ -1,58 +1,59 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Container from "../components/common/Container";
 import NavBar from "../components/common/NavBar";
 import styled from "styled-components";
+import axios from "axios";
+
+const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 const ListPage = () => {
-  const harmonyData = [
-    {
-      id: 1,
-      location: "정릉동",
-      description: "아이의 모든 것을 책임지는 하모니입니다.",
-      imagePath: "/vector1.png",
-    },
-    {
-      id: 2,
-      location: "정릉동",
-      description: "아이의 모든 것을 책임지는 하모니입니다.",
-      imagePath: "/vector2.png",
-    },
-    {
-      id: 3,
-      location: "정릉동",
-      description: "아이의 모든 것을 책임지는 하모니입니다.",
-      imagePath: "/vector3.png",
-    },
-    {
-      id: 4,
-      location: "정릉동",
-      description: "아이의 모든 것을 책임지는 하모니입니다.",
-      imagePath: "/vector4.png",
-    },
-    {
-      id: 5,
-      location: "정릉동",
-      description: "아이의 모든 것을 책임지는 하모니입니다.",
-      imagePath: "/vector5.png",
-    },
-    {
-      id: 6,
-      location: "정릉동",
-      description: "아이의 모든 것을 책임지는 하모니입니다.",
-      imagePath: "/vector6.png",
-    },
-    {
-      id: 7,
-      location: "정릉동",
-      description: "아이의 모든 것을 책임지는 하모니입니다.",
-      imagePath: "/vector7.png",
-    },
-    {
-      id: 8,
-      location: "정릉동",
-      description: "아이의 모든 것을 책임지는 하모니입니다.",
-      imagePath: "/vector8.png",
-    },
+  const [harmonyData, setHarmonyData] = useState([]);
+  const navigate = useNavigate();
+
+  const imagePaths = [
+    "/vector1.png",
+    "/vector2.png",
+    "/vector3.png",
+    "/vector4.png",
+    "/vector5.png",
+    "/vector6.png",
+    "/vector7.png",
+    "/vector8.png",
   ];
+
+  useEffect(() => {
+    const fetchHarmonyData = async () => {
+      const accessToken = localStorage.getItem("accessToken");
+      if (!accessToken) {
+        console.error("액세스 토큰이 없습니다.");
+        return;
+      }
+      try {
+        const response = await axios.get(`${serverUrl}/main/listOfALlHarmony`, {
+          headers: {
+            access: accessToken,
+          },
+        });
+        if (response.status === 200) {
+          const processedData = response.data
+            .slice(0, 8)
+            .map((item, index) => ({
+              ...item,
+              imagePath: imagePaths[index],
+            }));
+          setHarmonyData(processedData);
+        }
+      } catch (error) {
+        console.error("하모니 데이터 가져오기 실패:", error);
+      }
+    };
+    fetchHarmonyData();
+  }, []);
+
+  const handleHarmonyClick = (id) => {
+    navigate(`/detail/${id}`);
+  };
 
   return (
     <>
@@ -61,10 +62,15 @@ const ListPage = () => {
         <PageTitle>우리동네 하모니</PageTitle>
         <HarmonyGrid>
           {harmonyData.map((harmony) => (
-            <HarmonyItem key={harmony.id}>
-              <Location>{harmony.location} 하모니</Location>
-              <Image src={harmony.imagePath} alt="Harmony" />
-              <Description>{harmony.description}</Description>
+            <HarmonyItem
+              key={harmony.id}
+              onClick={() => handleHarmonyClick(harmony.id)}
+            >
+              <Location>{harmony.regin} 하모니</Location>
+              <ImageContainer>
+                <Image src={harmony.imagePath} alt="Harmony" />
+              </ImageContainer>
+              <Description>{harmony.title}</Description>
             </HarmonyItem>
           ))}
         </HarmonyGrid>
@@ -91,7 +97,7 @@ const HarmonyGrid = styled.div`
 const HarmonyItem = styled.div`
   background-color: #eeeeee;
   border-radius: 10px;
-  height: 400px;
+  height: 470px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,15 +107,27 @@ const HarmonyItem = styled.div`
 const Location = styled.h2`
   font-size: 18px;
   font-weight: bold;
+  margin: 20px 0;
+`;
+
+const ImageContainer = styled.div`
+  width: 100%;
+  height: 420px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
   margin-bottom: 20px;
 `;
 
 const Image = styled.img`
   width: 100%;
-  margin-bottom: 20px;
+  height: 100%;
+  object-fit: cover;
 `;
 
 const Description = styled.p`
   text-align: center;
-  font-size: 16px;
+  font-size: 14.9px;
+  margin: 10px 0;
 `;

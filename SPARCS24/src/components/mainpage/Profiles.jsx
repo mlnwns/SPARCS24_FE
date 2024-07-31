@@ -40,7 +40,7 @@ const ProfileInfo = styled.div`
     rgba(0, 0, 0, 0.5) 50%,
     rgba(0, 0, 0, 0) 100%
   );
-  height: 30%; // 그림자 효과의 높이를 증가
+  height: 30%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -58,27 +58,31 @@ const Name = styled.p`
   font-size: 0.9rem;
 `;
 
-const Profiles = () => {
-  const profiles = [
+const Profiles = ({ data }) => {
+  const profiles = data || [
     {
       src: "/Grandma1.png",
-      address: "성북구 정릉동",
-      name: "김*경 하모니•58세",
+      regin: "성북구 정릉동",
+      name: "김*경 하모니",
+      age: "58세",
     },
     {
       src: "/Grandma2.png",
-      address: "강남구 역삼동",
-      name: "이*희 하모니•62세",
+      regin: "강남구 역삼동",
+      name: "이*희 하모니",
+      age: "62세",
     },
     {
       src: "/Grandma3.png",
-      address: "마포구 합정동",
-      name: "박*철 하모니•55세",
+      regin: "마포구 합정동",
+      name: "박*철 하모니",
+      age: "55세",
     },
     {
       src: "/Grandma4.png",
-      address: "서초구 반포동",
-      name: "최*영 하모니•60세",
+      regin: "서초구 반포동",
+      name: "최*영 하모니",
+      age: "60세",
     },
   ];
 
@@ -86,10 +90,13 @@ const Profiles = () => {
     <ProfilesContainer>
       {profiles.map((profile, index) => (
         <ProfileCard key={index}>
-          <ProfileImage src={profile.src} alt={profile.name} />
+          <ProfileImage
+            src={profile.src || `/Grandma${index + 1}.png`}
+            alt={profile.name}
+          />
           <ProfileInfo>
-            <Address>{profile.address}</Address>
-            <Name>{profile.name}</Name>
+            <Address>{profile.regin}</Address>
+            <Name>{`${profile.name}•${profile.age}`}</Name>
           </ProfileInfo>
         </ProfileCard>
       ))}
