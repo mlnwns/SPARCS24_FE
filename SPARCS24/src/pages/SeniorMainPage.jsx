@@ -16,15 +16,15 @@ const images = [
 const SeniorMainPage = () => {
   return (
     <>
-      <NavBar senior />
-      <SeniorContainer main>
+      <NavBar senior="true" />
+      <SeniorContainer>
         <SwiperComponent images={images} height="432px" />
         <TabComponent />
-        <Subtitle senior>하모니의 이야기</Subtitle>
+        <Subtitle senior="true">하모니의 이야기</Subtitle>
         <Stories />
-        <Subtitle senior>하모니가 꼭 들어야하는 강의</Subtitle>
+        <Subtitle senior="true">하모니가 꼭 들어야하는 강의</Subtitle>
         <Lectures />
-        <Subtitle senior>하모니들이 자주 묻는 질문</Subtitle>
+        <Subtitle senior="true">하모니들이 자주 묻는 질문</Subtitle>
         <Questions />
       </SeniorContainer>
       <Footer />
