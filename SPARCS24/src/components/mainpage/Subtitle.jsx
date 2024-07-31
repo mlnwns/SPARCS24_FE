@@ -12,7 +12,7 @@ const SubtitleContainer = styled.div`
 
 const Subtitle = styled.h2`
   font-size: 1.3em;
-  font-weight: 700;
+  font-weight: bold;
   margin: 0;
 `;
 
