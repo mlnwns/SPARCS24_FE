@@ -1,11 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import RegisterContainer from "../components/register/RegisterContainer";
 import styled from "styled-components";
 import LabeledInput from "../components/register/LabeledInput";
 
 const ParentRegisterPage = () => {
+  const navigate = useNavigate();
   const clientId = import.meta.env.VITE_CLIENT_ID;
   const clientSecret = import.meta.env.VITE_CLIENT_SECRET;
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
 
   const [formData, setFormData] = useState({
     phone: "",
@@ -17,6 +20,7 @@ const ParentRegisterPage = () => {
   });
 
   const [addressVerified, setAddressVerified] = useState(false);
+  const [usernameAvailable, setUsernameAvailable] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +30,9 @@ const ParentRegisterPage = () => {
     }));
     if (name === "address") {
       setAddressVerified(false);
+    }
+    if (name === "username") {
+      setUsernameAvailable(false);
     }
   };
 
@@ -56,10 +63,43 @@ const ParentRegisterPage = () => {
     }
   };
 
+  const handleUsernameCheck = async () => {
+    if (!formData.username) {
+      alert("아이디를 입력해주세요.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `${serverUrl}/findUsername/${formData.username}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      const responseText = await response.text();
+      alert(responseText);
+
+      if (responseText === "동일한 아이디가 존재합니다.") {
+        setUsernameAvailable(false);
+      } else {
+        setUsernameAvailable(true);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("아이디 확인 중 오류가 발생했습니다.");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!addressVerified) {
       alert("주소를 먼저 확인해주세요.");
+      return;
+    }
+    if (!usernameAvailable) {
+      alert("아이디 중복 확인을 먼저 해주세요.");
       return;
     }
 
@@ -70,12 +110,10 @@ const ParentRegisterPage = () => {
       name: formData.name,
       eMail: formData.email,
       regin: formData.address,
-      age: "2000-03-17",
-      phoneNum: "01075510069",
     };
 
     try {
-      const response = await fetch("http://110.165.16.33:8080/join", {
+      const response = await fetch(`${serverUrl}/join`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -85,10 +123,16 @@ const ParentRegisterPage = () => {
       });
 
       if (response.ok) {
-        const result = await response.json();
+        const responseText = await response.text();
+        let result;
+        try {
+          result = JSON.parse(responseText);
+        } catch (error) {
+          result = responseText;
+        }
         console.log("회원가입 성공:", result);
         alert("회원가입이 완료되었습니다.");
-        // 여기에 회원가입 성공 후 처리 (예: 로그인 페이지로 이동)
+        navigate("/login");
       } else {
         console.error("회원가입 실패:", response.statusText);
         alert("회원가입에 실패했습니다. 다시 시도해주세요.");
@@ -97,6 +141,10 @@ const ParentRegisterPage = () => {
       console.error("Error:", error);
       alert("회원가입 중 오류가 발생했습니다.");
     }
+  };
+
+  const handlePrevious = () => {
+    navigate(-1); // 이전 페이지로 이동
   };
 
   return (
@@ -131,6 +179,8 @@ const ParentRegisterPage = () => {
           buttonText="중복확인"
           value={formData.username}
           onChange={handleInputChange}
+          onButtonClick={handleUsernameCheck}
+          completed={usernameAvailable}
         />
         <LabeledInput
           label="비밀번호"
@@ -164,7 +214,9 @@ const ParentRegisterPage = () => {
       </form>
 
       <ButtonContainer>
-        <PreviousButton type="button">이전</PreviousButton>
+        <PreviousButton type="button" onClick={handlePrevious}>
+          이전
+        </PreviousButton>
         <RegisterButton type="submit" onClick={handleSubmit}>
           가입하기
         </RegisterButton>
