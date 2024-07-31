@@ -60,6 +60,7 @@ const ListPage = () => {
       <NavBar useDetailLogo="true" hideDownNav></NavBar>
       <Container>
         <PageTitle>우리동네 하모니</PageTitle>
+        <AI src="aireco.png" />
         <HarmonyGrid>
           {harmonyData.map((harmony) => (
             <HarmonyItem
@@ -130,4 +131,11 @@ const Description = styled.p`
   text-align: center;
   font-size: 14.9px;
   margin: 10px 0;
+`;
+
+const AI = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  margin-bottom: 20px;
 `;
