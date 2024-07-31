@@ -8,15 +8,10 @@ import NewUserGuide from "../components/mainpage/NewUserGuide";
 import Footer from "../components/common/Footer";
 
 const images = [
-  { src: "/img1.png", alt: "Image 1" },
-  { src: "/img2.png", alt: "Image 2" },
-];
-
-const profiles = [
-  { src: "/img2.png", alt: "Profile 1" },
-  { src: "/img2.png", alt: "Profile 2" },
-  { src: "/img2.png", alt: "Profile 3" },
-  { src: "/img2.png", alt: "Profile 4" },
+  { src: "/Banner1.png", alt: "Banner 1" },
+  { src: "/Banner2.png", alt: "Banner 2" },
+  { src: "/Banner3.png", alt: "Banner 3" },
+  { src: "/Banner4.png", alt: "Banner 4" },
 ];
 
 const tips = [
@@ -42,12 +37,6 @@ const tips = [
   },
 ];
 
-const guideImages = [
-  { src: "/img2.png", alt: "Guide 1" },
-  { src: "/img2.png", alt: "Guide 2" },
-  { src: "/img2.png", alt: "Guide 3" },
-];
-
 const MainPage = () => {
   return (
     <>
@@ -55,9 +44,9 @@ const MainPage = () => {
       <Container>
         <SwiperComponent images={images} />
         <Subtitle>우리 동네 하모니는 누가 있을까요?</Subtitle>
-        <Profiles profiles={profiles} />
+        <Profiles />
         <Subtitle>하모니가 처음이신가요?</Subtitle>
-        <NewUserGuide images={guideImages} />
+        <NewUserGuide />
         <Subtitle>맞벌이 부부를 위한 육아 꿀팁</Subtitle>
         <Tips tips={tips} />
       </Container>
