@@ -5,14 +5,17 @@ import NavBar from "../components/common/NavBar";
 import styled from "styled-components";
 import { MdAddPhotoAlternate, MdAdd } from "react-icons/md";
 import { IoIosArrowForward } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const ResumePage = () => {
+  const navigate = useNavigate();
   const [selectedPersonalityKeywords, setSelectedPersonalityKeywords] =
     useState([]);
   const [selectedChildKeywords, setSelectedChildKeywords] = useState([]);
   const [isGenerateButtonEnabled, setIsGenerateButtonEnabled] = useState(false);
   const [generatedProfile, setGeneratedProfile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const serverUrl = import.meta.env.VITE_SERVER_URL;
 
   useEffect(() => {
@@ -73,9 +76,7 @@ const ResumePage = () => {
       });
       console.log("Profile generated successfully:", getResponse.data);
       setGeneratedProfile(getResponse.data);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 3000);
+      setIsLoading(false); // 즉시 로딩 상태 해제
     } catch (error) {
       console.error("Error in request:", error);
       alert("요청 중 오류가 발생했습니다.");
@@ -87,9 +88,29 @@ const ResumePage = () => {
     setGeneratedProfile(e.target.value);
   };
 
-  const handleSaveResume = () => {
-    // 이력서 저장 로직 구현
-    console.log("이력서 저장");
+  const handleSaveResume = async () => {
+    setIsSaving(true);
+    const accessToken = localStorage.getItem("accessToken");
+
+    try {
+      const response = await axios.put(
+        `${serverUrl}/main/saveHProfile`,
+        { explainText: generatedProfile },
+        {
+          headers: {
+            access: accessToken,
+          },
+        }
+      );
+      console.log("Resume saved successfully:", response.data);
+      alert("이력서가 성공적으로 저장되었습니다.");
+      navigate("/detail");
+    } catch (error) {
+      console.error("Error saving resume:", error);
+      alert("이력서 저장 중 오류가 발생했습니다.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const personalityKeywords = [
@@ -142,7 +163,7 @@ const ResumePage = () => {
 
   return (
     <>
-      <NavBar senior="true" hideDownNav="true" />
+      <NavBar senior="true" hideDownNav="true" useDetailLogo="true" />
       <SeniorContainer>
         <PageTitle>하모니 자기소개서</PageTitle>
         <ContentWrapper>
@@ -207,9 +228,6 @@ const ResumePage = () => {
               </KeywordGrid>
             </KeywordSection>
             <KeywordSection>
-              <TitleWrapper>
-                <SectionTitle>은퇴 전 경력을 작성해주세요</SectionTitle>
-              </TitleWrapper>
               <AddCareerButton>
                 <AddIcon>
                   <MdAdd size={24} />
@@ -218,19 +236,18 @@ const ResumePage = () => {
               </AddCareerButton>
             </KeywordSection>
             <GenerateButtonWrapper>
+              {isLoading && (
+                <LoadingMessage>AI 자기소개서 작성 중...</LoadingMessage>
+              )}
               <GenerateButton
                 onClick={sendKeywordsToBackend}
                 disabled={!isGenerateButtonEnabled || isLoading}
               >
-                <span>{isLoading ? "생성 중..." : "생성하기"}</span>
-                <IoIosArrowForward size={20} />
+                <img src="/Ai.png" alt="AI" />
+                <span>{isLoading ? "생성 중..." : "AI 생성하기"}</span>
+                {/* <IoIosArrowForward size={20} /> */}
               </GenerateButton>
             </GenerateButtonWrapper>
-            {isLoading && (
-              <LoadingMessage>
-                AI 자기소개서 작성 중... (약 5초 소요)
-              </LoadingMessage>
-            )}
           </LeftSection>
           <RightSection>
             {generatedProfile ? (
@@ -240,9 +257,14 @@ const ResumePage = () => {
                   onChange={handleProfileChange}
                   placeholder="생성된 자기소개서를 편집할 수 있습니다."
                 />
-                <SaveResumeButton onClick={handleSaveResume}>
-                  이력서 저장하기
-                </SaveResumeButton>
+                <SaveResumeButtonWrapper>
+                  <SaveResumeButton
+                    onClick={handleSaveResume}
+                    disabled={isSaving}
+                  >
+                    {isSaving ? "저장 중..." : "이력서 저장하기"}
+                  </SaveResumeButton>
+                </SaveResumeButtonWrapper>
               </>
             ) : (
               <>
@@ -260,6 +282,7 @@ const ResumePage = () => {
 const PageTitle = styled.h1`
   font-size: 24px;
   margin-bottom: 20px;
+  font-weight: bold;
 `;
 
 const ContentWrapper = styled.div`
@@ -274,6 +297,8 @@ const LeftSection = styled.div`
 
 const RightSection = styled.div`
   width: 50%;
+  height: 41.6rem;
+  margin-bottom: 30px;
   padding-left: 20px;
   background-color: #f4f4f4;
   border-radius: 10px;
@@ -367,15 +392,17 @@ const AddIcon = styled(UploadIcon)`
 const GenerateButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   margin-top: 30px;
 `;
 
 const GenerateButton = styled.button`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 230px;
-  padding: 14px 16px;
+  justify-content: center;
+  width: 180px;
+  padding: 14px 20px;
+  margin-bottom: 2rem;
   background-color: ${(props) => (props.disabled ? "#8ba3e6" : "#4976ef")};
   color: white;
   border: none;
@@ -384,8 +411,13 @@ const GenerateButton = styled.button`
   font-size: 16px;
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 
+  img {
+    width: 20px;
+    height: 20px;
+  }
+
   span {
-    margin-right: 20px;
+    margin: 0 10px;
   }
 `;
 
@@ -407,22 +439,30 @@ const ProfileTextArea = styled.textarea`
   }
 `;
 
+const SaveResumeButtonWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
 const SaveResumeButton = styled.button`
   background-color: rgba(73, 118, 239, 0.3);
   color: black;
   border: none;
   border-radius: 7px;
-  padding: 10px 20px;
+  margin-bottom: 2rem;
+  padding: 13px 0;
   font-size: 16px;
-  cursor: pointer;
-  margin-top: 20px;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
+  width: 94%;
 `;
 
 const LoadingMessage = styled.p`
   color: #4976ef;
   font-size: 14px;
-  margin-top: 10px;
-  text-align: center;
+  margin-right: 20px;
 `;
 
 export default ResumePage;
