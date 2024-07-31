@@ -16,22 +16,22 @@ const images = [
 
 const tips = [
   {
-    image: "/img2.png",
+    image: "/tip1.png",
     title: "엄마가 싫어요",
     subtitle: "1시간•아동인권과 아동학대 예방교육",
   },
   {
-    image: "/img2.png",
+    image: "/tip2.png",
     title: "[필수교육] 성희롱 예방교육",
     subtitle: "1시간•성희롱 예방 교육",
   },
   {
-    image: "/img2.png",
+    image: "/tip3.png",
     title: "[필수교육] 아이돌봄 지원 사업 ",
     subtitle: "1시간•아이돌봄 지원사업 및 제도 이해",
   },
   {
-    image: "/img2.png",
+    image: "/tip4.png",
     title: "직업윤리 및 서비스마인드",
     subtitle: "1시간•직업윤리 및 서비스마인드 교육",
   },
