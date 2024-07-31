@@ -7,6 +7,9 @@ import RegisterPage from "./pages/RegisterPage";
 import ParentRegisterPage from "./pages/ParentRegisterPage";
 import SeniorRegisterPage from "./pages/SeniorRegisterPage";
 import ResumePage from "./pages/ResumePage";
+import DetailPage from "./pages/DetailPage";
+import CoverLetterPage from "./pages/CoverLetterPage";
+import ListPage from "./pages/ListPage";
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
       <Route path="/register/parent" element={<ParentRegisterPage />} />
       <Route path="/register/senior" element={<SeniorRegisterPage />} />
       <Route path="/senior/resume" element={<ResumePage />} />
+      <Route path="/detail" element={<DetailPage />} />
+      <Route path="/parent/cover-letter" element={<CoverLetterPage />} />
+      <Route path="/list" element={<ListPage />} />
     </Routes>
   );
 }
