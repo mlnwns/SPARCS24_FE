@@ -33,26 +33,26 @@ const ResumePage = () => {
 
   const personalityKeywords = [
     "책임감 있는",
-    "체력 좋은",
-    "소통 능한",
-    "응급 대처 능한",
-    "인내 좋은",
-    "문제 해결 능한",
-    "관찰 능한",
-    "요리 솜씨 좋은",
-    "위생 철저한",
-    "감정 조절 능한",
-    "안정 있는",
-    "문화 존중하는",
-    "교육 지식 있는",
-    "기술 활용 능한",
-    "심리 이해 능한",
-    "놀이 능한",
-    "정리 능한",
-    "적응 능한",
+    "강건한",
+    "사교적인",
+    "따뜻한",
+    "예리한",
+    "손맛 좋은",
+    "깔끔한",
+    "정돈된",
+    "해결가능한",
+    "통찰력 있는",
+    "차분한",
+    "끈기있는",
+    "포용적인",
+    "학식있는",
+    "활용 능숙한",
+    "다재다능한",
+    "유연한",
     "세심한",
-    "부모 의견에 동의하는",
-    "기록을 잘하는",
+    "협조적인",
+    "꼼꼼한",
+    "다정한",
   ];
 
   const childKeywords = [
@@ -64,15 +64,15 @@ const ResumePage = () => {
     "차분한",
     "독립적인",
     "용감한",
-    "잘먹는",
+    "잘 먹는",
     "집중력있는",
-    "규칙을잘지키는",
+    "준법적인",
     "신중한",
     "도전적인",
     "명량한",
     "조심스러운",
     "창의적인",
-    "마음이 따듯한",
+    "자상한",
     "엉뚱한",
     "유머러스한",
     "다정한",
@@ -96,10 +96,12 @@ const ResumePage = () => {
               </UploadButton>
             </PhotoUploadSection>
             <KeywordSection>
-              <SectionTitle>어떤 성격을 가지고 계신가요?</SectionTitle>
-              <KeywordInstruction>
-                *키워드는 최대 3개까지 선택해주세요
-              </KeywordInstruction>
+              <TitleWrapper>
+                <SectionTitle>어떤 성격을 가지고 계신가요?</SectionTitle>
+                <KeywordInstruction>
+                  *키워드는 최대 3개까지 선택해주세요
+                </KeywordInstruction>
+              </TitleWrapper>
               <KeywordGrid>
                 {personalityKeywords.map((keyword, index) => (
                   <KeywordButton
@@ -113,10 +115,12 @@ const ResumePage = () => {
               </KeywordGrid>
             </KeywordSection>
             <KeywordSection>
-              <SectionTitle>어떤 아이를 만나고 싶으신가요?</SectionTitle>
-              <KeywordInstruction>
-                *키워드는 최대 3개까지 선택해주세요
-              </KeywordInstruction>
+              <TitleWrapper>
+                <SectionTitle>어떤 아이를 만나고 싶으신가요?</SectionTitle>
+                <KeywordInstruction>
+                  *키워드는 최대 3개까지 선택해주세요
+                </KeywordInstruction>
+              </TitleWrapper>
               <KeywordGrid>
                 {childKeywords.map((keyword, index) => (
                   <KeywordButton
@@ -188,15 +192,21 @@ const KeywordSection = styled.div`
   margin-bottom: 20px;
 `;
 
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.2rem;
+  margin-top: 2rem;
+`;
+
 const SectionTitle = styled.h2`
   font-size: 16px;
-  margin-bottom: 5px;
+  margin-right: 10px;
 `;
 
 const KeywordInstruction = styled.p`
   font-size: 14px;
   color: #f66832;
-  margin-bottom: 10px;
 `;
 
 const KeywordGrid = styled.div`
@@ -207,7 +217,7 @@ const KeywordGrid = styled.div`
 
 const KeywordButton = styled.div`
   font-size: 14px;
-  padding: 10px 10px;
+  padding: 13px 0px;
   border-radius: 6px;
   text-align: center;
   cursor: pointer;
