@@ -9,8 +9,9 @@ import Lectures from "../components/mainpage/Lectures";
 import Questions from "../components/mainpage/Questions";
 
 const images = [
-  { src: "/img1.png", alt: "Image 1" },
-  { src: "/img2.png", alt: "Image 2" },
+  { src: "/SeniorBanner1.png", alt: "Image 1" },
+  { src: "/SeniorBanner2.png", alt: "Image 2" },
+  { src: "/SeniorBanner3.png", alt: "Image 2" },
 ];
 
 const SeniorMainPage = () => {

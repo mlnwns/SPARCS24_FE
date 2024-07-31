@@ -24,7 +24,7 @@ const LectureOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -46,10 +46,10 @@ const LectureLink = styled.p`
 
 const Lectures = () => {
   const lectures = [
-    { image: "/img1.png", title: "아동학대 예방교육" },
-    { image: "/img2.png", title: "성희롱 예방교육" },
-    { image: "/img3.png", title: "아이돌봄 지원사업 이해" },
-    { image: "/img4.png", title: "직업윤리 및 서비스마인드" },
+    { image: "/lecture1.png", title: "아동학대 예방교육" },
+    { image: "/lecture2.png", title: "성희롱 예방교육" },
+    { image: "/lecture3.png", title: "아이돌봄 지원사업 이해" },
+    { image: "/lecture4.png", title: "직업윤리 및 서비스마인드" },
   ];
 
   return (
