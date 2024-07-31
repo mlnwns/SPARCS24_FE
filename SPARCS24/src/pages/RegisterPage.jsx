@@ -13,11 +13,15 @@ const RegisterPage = () => {
     navigate("/register/senior");
   };
 
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     <StyledContainer>
       <TitleContainer>
-        <Title>하모니 케어</Title>
-        <Subtitle>안녕하세요. 하모니케어 회원가입을 환영합니다.</Subtitle>
+        <Logo src="logo.png" alt="Logo" onClick={handleLogoClick} />
+        <Subtitle>안녕하세요! 하모니 회원가입을 환영합니다.</Subtitle>
       </TitleContainer>
       <CardContainer>
         <Card>
@@ -66,19 +70,19 @@ const Title = styled.h1`
 
 const Subtitle = styled.h2`
   font-size: 1.2rem;
-  font-weight: 400;
+  font-weight: bold;
   color: #666;
 `;
 
 const CardContainer = styled.div`
   display: flex;
   justify-content: center;
-  gap: 4rem;
+  gap: 3rem;
 `;
 
 const Card = styled.div`
   width: 300px;
-  height: 400px;
+  height: 350px;
   border-radius: 10px;
   display: flex;
   background-color: #f5f5f5;
@@ -86,6 +90,7 @@ const Card = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 2rem;
+  margin-bottom: 4rem;
 `;
 
 const CardTitle = styled.h2`
@@ -98,11 +103,10 @@ const ButtonGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-bottom: 2rem;
 `;
 
 const RegisterButton = styled.button`
-  padding: 1rem 7rem;
+  padding: 0.9rem 7rem;
   font-size: 1rem;
   background-color: #d2d2d2;
   border: none;
@@ -116,11 +120,19 @@ const RegisterButton = styled.button`
 `;
 
 const SNSButton = styled(RegisterButton)`
-  padding: 1rem 5.3rem;
+  padding: 0.9rem 5.3rem;
   background-color: #ffeb00;
   color: #000000;
 
   &:hover {
     background-color: #ffcc00;
   }
+`;
+
+const Logo = styled.img`
+  width: 55%;
+  height: 100px;
+  margin-bottom: 10px;
+  margin-top: 100px;
+  cursor: pointer;
 `;
