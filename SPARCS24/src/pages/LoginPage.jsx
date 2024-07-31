@@ -36,7 +36,6 @@ const LoginPage = () => {
           localStorage.setItem("accessToken", accessToken);
           console.log("Access token saved to localStorage");
 
-          // 역할 확인을 위한 추가 요청
           const storedAccessToken = localStorage.getItem("accessToken");
           const roleResponse = await fetch(`${serverUrl}/main/role`, {
             method: "GET",
@@ -48,7 +47,6 @@ const LoginPage = () => {
           if (roleResponse.ok) {
             const roleData = await roleResponse.json();
 
-            // roleData를 로컬 스토리지에 저장
             localStorage.setItem("userRole", JSON.stringify(roleData));
             console.log("User role saved to localStorage");
 
@@ -57,7 +55,7 @@ const LoginPage = () => {
             } else if (roleData === true || roleData === "true") {
               navigate("/");
             } else {
-              navigate("/"); // 기본 페이지로 이동
+              navigate("/");
             }
           } else {
             console.warn("Failed to fetch user role");
@@ -65,7 +63,7 @@ const LoginPage = () => {
           }
         } else {
           console.warn("Access token not found in response headers");
-          navigate("/"); // 토큰이 없을 경우 기본 페이지로 이동
+          navigate("/");
         }
       } else {
         throw new Error("Login failed");
@@ -75,12 +73,17 @@ const LoginPage = () => {
       alert("로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.");
     }
   };
+
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     <div>
       <Container>
         <form onSubmit={handleLogin}>
           <FormWrapper>
-            <Logo src="logo.png" alt="Logo" />
+            <Logo src="logo.png" alt="Logo" onClick={handleLogoClick} />
             <InputComponent
               label="아이디"
               name="username"
@@ -110,7 +113,7 @@ const LoginPage = () => {
             </CheckboxWrapper>
             <LoginButton type="submit">로그인하기</LoginButton>
             <SignUpText>
-              하모니케어가 처음이라면?
+              하모니가 처음이라면?
               <SignUpLink onClick={handleSignUp}>가입하기</SignUpLink>
             </SignUpText>
             <Divider />
@@ -134,10 +137,12 @@ const FormWrapper = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 100%;
+  width: 45%;
   height: 100px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   margin-top: 15px;
+  margin-left: 25%;
+  cursor: pointer;
 `;
 
 const CheckboxWrapper = styled.div`
@@ -154,7 +159,7 @@ const LoginButton = styled.button`
   padding: 15px 10px;
   font-size: 1.2rem;
   margin-top: 20px;
-  background-color: #d2d2d2;
+  background-color: #4976ef;
   color: white;
   border: none;
   border-radius: 7px;
