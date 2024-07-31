@@ -6,6 +6,7 @@ import SeniorMainPage from "./pages/SeniorMainPage";
 import RegisterPage from "./pages/RegisterPage";
 import ParentRegisterPage from "./pages/ParentRegisterPage";
 import SeniorRegisterPage from "./pages/SeniorRegisterPage";
+import ResumePage from "./pages/ResumePage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="register" element={<RegisterPage />} />
       <Route path="/register/parent" element={<ParentRegisterPage />} />
       <Route path="/register/senior" element={<SeniorRegisterPage />} />
+      <Route path="/senior/resume" element={<ResumePage />} />
     </Routes>
   );
 }
