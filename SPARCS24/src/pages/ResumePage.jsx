@@ -12,6 +12,7 @@ const ResumePage = () => {
   const [selectedChildKeywords, setSelectedChildKeywords] = useState([]);
   const [isGenerateButtonEnabled, setIsGenerateButtonEnabled] = useState(false);
   const [generatedProfile, setGeneratedProfile] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const serverUrl = import.meta.env.VITE_SERVER_URL;
 
   useEffect(() => {
@@ -45,6 +46,7 @@ const ResumePage = () => {
   };
 
   const sendKeywordsToBackend = async () => {
+    setIsLoading(true);
     const data = {
       f1C: selectedChildKeywords[0],
       f2C: selectedChildKeywords[1],
@@ -71,14 +73,23 @@ const ResumePage = () => {
       });
       console.log("Profile generated successfully:", getResponse.data);
       setGeneratedProfile(getResponse.data);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
     } catch (error) {
       console.error("Error in request:", error);
       alert("요청 중 오류가 발생했습니다.");
+      setIsLoading(false);
     }
   };
 
   const handleProfileChange = (e) => {
     setGeneratedProfile(e.target.value);
+  };
+
+  const handleSaveResume = () => {
+    // 이력서 저장 로직 구현
+    console.log("이력서 저장");
   };
 
   const personalityKeywords = [
@@ -209,20 +220,30 @@ const ResumePage = () => {
             <GenerateButtonWrapper>
               <GenerateButton
                 onClick={sendKeywordsToBackend}
-                disabled={!isGenerateButtonEnabled}
+                disabled={!isGenerateButtonEnabled || isLoading}
               >
-                <span>생성하기</span>
+                <span>{isLoading ? "생성 중..." : "생성하기"}</span>
                 <IoIosArrowForward size={20} />
               </GenerateButton>
             </GenerateButtonWrapper>
+            {isLoading && (
+              <LoadingMessage>
+                AI 자기소개서 작성 중... (약 5초 소요)
+              </LoadingMessage>
+            )}
           </LeftSection>
           <RightSection>
             {generatedProfile ? (
-              <ProfileTextArea
-                value={generatedProfile}
-                onChange={handleProfileChange}
-                placeholder="생성된 자기소개서를 편집할 수 있습니다."
-              />
+              <>
+                <ProfileTextArea
+                  value={generatedProfile}
+                  onChange={handleProfileChange}
+                  placeholder="생성된 자기소개서를 편집할 수 있습니다."
+                />
+                <SaveResumeButton onClick={handleSaveResume}>
+                  이력서 저장하기
+                </SaveResumeButton>
+              </>
             ) : (
               <>
                 자기소개서 작성을 위한 기본 정보를 입력해주세요
@@ -257,6 +278,7 @@ const RightSection = styled.div`
   background-color: #f4f4f4;
   border-radius: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   line-height: 1.6;
@@ -378,11 +400,29 @@ const ProfileTextArea = styled.textarea`
   font-size: 16px;
   line-height: 1.6;
   background-color: #f4f4f4;
-  font-family: inherit; // 기존 폰트 상속
+  font-family: inherit;
   &:focus {
     outline: none;
-    box-shadow: none; // 포커스 시 테두리 제거
+    box-shadow: none;
   }
+`;
+
+const SaveResumeButton = styled.button`
+  background-color: rgba(73, 118, 239, 0.3);
+  color: black;
+  border: none;
+  border-radius: 7px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+`;
+
+const LoadingMessage = styled.p`
+  color: #4976ef;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
 `;
 
 export default ResumePage;
