@@ -56,7 +56,7 @@ const NavLink = styled.a`
 
 const LogoWrapper = styled.div`
   img {
-    width: 4rem;
+    width: 10rem;
     cursor: pointer;
   }
 `;
@@ -89,7 +89,7 @@ const IconSpace = styled.div`
   cursor: pointer;
 `;
 
-const NavBar = ({ senior, hideDownNav }) => {
+const NavBar = ({ senior, hideDownNav, useDetailLogo }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -115,11 +115,13 @@ const NavBar = ({ senior, hideDownNav }) => {
     }
   };
 
+  const logoSrc = useDetailLogo ? "/detail-logo.png" : "/logo.png";
+
   return (
     <>
       <UpNavBarContainer senior={senior}>
         <LogoWrapper onClick={handleLogoClick}>
-          <img src="/logo.png" alt="SPARCS 24th" />
+          <img src={logoSrc} alt="logo" />
         </LogoWrapper>
         <NavList>
           <NavItem>
@@ -156,7 +158,7 @@ const NavBar = ({ senior, hideDownNav }) => {
           ) : (
             <NavList>
               <NavItem>
-                <NavLink href="#">자녀 정보 등록</NavLink>
+                <NavLink href="/parent/cover-letter">자녀 정보 등록</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="#">하모니 찾기</NavLink>
