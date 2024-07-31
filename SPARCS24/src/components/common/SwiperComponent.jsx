@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 const StyledSwiper = styled(Swiper)`
   width: 100%;
   height: ${(props) => props.height || "20rem"};
+  border-radius: 10px;
 
   .swiper-slide {
     width: 100%;
