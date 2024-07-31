@@ -75,15 +75,19 @@ const InputWithIcon = styled(Input)`
   padding-right: 35px;
   width: calc(100% - 35px);
 `;
-
 const LabeledInput = ({
   label,
+  type,
+  name,
+  placeholder,
+  value,
+  onChange,
   required,
   buttonText,
+  onButtonClick,
   completed,
   isAddress,
   onAddressSearch,
-  ...inputProps
 }) => {
   return (
     <InputContainer>
@@ -94,15 +98,35 @@ const LabeledInput = ({
       <InputWrapper>
         {isAddress ? (
           <InputWithIconWrapper>
-            <InputWithIcon {...inputProps} $completed={completed} />
+            <InputWithIcon
+              type={type}
+              name={name}
+              placeholder={placeholder}
+              value={value}
+              onChange={onChange}
+              required={required}
+              $completed={completed}
+            />
             <IconWrapper onClick={onAddressSearch}>
               <FaSearch />
             </IconWrapper>
           </InputWithIconWrapper>
         ) : (
-          <Input {...inputProps} $completed={completed} />
+          <Input
+            type={type}
+            name={name}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            required={required}
+            $completed={completed}
+          />
         )}
-        {buttonText && <Button $completed={completed}>{buttonText}</Button>}
+        {buttonText && (
+          <Button onClick={onButtonClick} $completed={completed}>
+            {buttonText}
+          </Button>
+        )}
       </InputWrapper>
     </InputContainer>
   );
