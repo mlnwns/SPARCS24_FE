@@ -205,7 +205,7 @@ const ParentRegisterPage = () => {
           type="text"
           name="address"
           isAddress
-          placeholder="도로명 주소를 입력하세요"
+          placeholder="도로명 주소를 입력하세요. (ex. 서울시 성북구 동소문로 1길)"
           value={formData.address}
           onChange={handleInputChange}
           onAddressSearch={handleAddressVerification}
