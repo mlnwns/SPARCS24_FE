@@ -6,10 +6,13 @@ import Step from "../components/common/Step";
 import { FaCircle, FaCheckCircle } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL;
 
 const CoverLetterPage = () => {
+  const navigate = useNavigate();
+
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
   const [title, setTitle] = useState("");
@@ -86,6 +89,7 @@ const CoverLetterPage = () => {
 
         if (putResponse.status === 200) {
           alert("이력서가 성공적으로 저장되었습니다.");
+          navigate("/");
         } else {
           alert("키워드 저장에 실패했습니다.");
         }
